@@ -1,8 +1,14 @@
 <?php ob_start()?>
+
+<?php if(isset($_SESSION['alert'])): ?>
+    <div class="alert_contact"><?php echo $_SESSION['alert']; ?></div>
+    <?php unset($_SESSION['alert']); ?>
+<?php endif; ?>
+
     <div class="wrapper_contact">
         <div class="form-box contact">
             <h2>Formulaire de contact</h2>
-            <form method="POST" action="" enctype="multipart/form-data">
+            <form method="POST" action="<?= URL ?>envoyer-msg-contact" enctype="multipart/form-data">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
                     <label for="username" class="form-label" required="">Adresse Mail</label>

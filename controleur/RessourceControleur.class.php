@@ -24,10 +24,10 @@ class RessourceControleur {
                 $tabDocument = $this->ressourceDao->FindOneDocumentToDelete($acronyme,$numero_sequence,$numero_ressource);
                 $this->ressourceDao->supprimerRessourceBDD($acronyme, $numero_sequence, $numero_ressource);
                 foreach($tabDocument as $document){
-                    //unlink("public/ressource/".$document);
+                    unlink("public/ressource/".$document);
                 }
                 
-                //header("Location: ".URL."afficher-formation-ressource/$acronyme"); 
+                header("Location: ".URL."afficher-formation-ressource/$acronyme"); 
             }    
             else throw new Exception("Vous n'avez pas les droits nécessaires");  
     }

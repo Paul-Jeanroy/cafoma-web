@@ -30,20 +30,31 @@ class UserControleur {
     }
     public function creerCompteValidation($login,$mail,$password,$mentions,$perso){
         $alert = "";
+         $mailExist = $this->userDao->isMailAllreadyExist($mail); 
+        // Vérification mot de passe fort
+        if(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/", $password)) {
+            $alert = "Votre mot de passe doit contenir au moins 12 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.";
+            require "vue/creerCompte.view.php";
+            return;
+        }  
+        if($mailExist > 0){
+            $alert = "Ce mail est déjà renseigner pour un compte";
+            require "vue/creerCompte.view.php";
+        }
+
         if(!$mentions || !$perso){
             $alert = "Vous devez valider les cases à cocher pour pouvoir créer votre compte étudiant !"; 
             require "vue/creerCompte.view.php";
         }
-        else {
-                $cle = uniqid();
-                $hash = password_hash($password, PASSWORD_DEFAULT);
-                echo "hash=".$hash."<br>";
-                $user=new User($login, $hash, $mail, "etudiant","profil.png", 1);
-                if($this->userDao->createUser($user, $cle)){
-                    $this->sendMailUser($login, $mail,$cle);
-                    header("Location: ".URL. "login");
-                }
-                else throw new Exception ("Le compte n'a pu être créé.");
+        else {       
+            $cle = uniqid();
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+            $user=new User($login, $hash, $mail, "etudiant","profil.png", 0);
+            if($this->userDao->createUser($user, $cle)){
+                $this->sendMailUser($login, $mail,$cle);
+                header("Location: ".URL. "login");
+            }
+            else throw new Exception ("Le compte n'a pu être créé.");
         }
     }
     private function sendMailUser($login,$mail,$cle){
@@ -54,8 +65,6 @@ class UserControleur {
     }
     function recevoirMailCompteValidation($login,$cle){
         $state = $this->userDao->validerCompte($login,$cle);
-        if($state == false)
-            throw new Exception ("Le lien est incorrecte, votre compte n'est pas validé");
         $alert="";
         require "vue/login.view.php";
     }
@@ -67,7 +76,6 @@ class UserControleur {
         else header("Location: ".URL."afficher-profil");
     }
     function validerLoginPasswd($login,$password){
-        //echo "validerLoginPasswd login=".$login;
         $alert="";
         if(!$this->userDao->isExistLoginUser($login)){
             throw new Exception("Le login n'existe pas");
@@ -77,10 +85,7 @@ class UserControleur {
                      && isset($password) && !empty($password))        
             {
                 if($this->userDao->isValidUser($login)){
-                    //echo "user valide";
-                    //echo "password=".$password."<br>";
                     $passwdHashbd = $this->userDao->getPasswdHashUser($login);
-                    //echo "passwdHash bd=".$passwdHashbd."<br>";
                     if(password_verify($password, $passwdHashbd)){
                         $_SESSION['login'] = $login;
                         $_SESSION['role'] = $this->userDao->getRoleByLogin($login);
@@ -193,7 +198,6 @@ class UserControleur {
             $alert = "";
             $cle = uniqid();
             $hash = password_hash($password, PASSWORD_DEFAULT);
-            echo "hash=".$hash."<br>";
             $user=new User($login, $hash, $mail, "partenaire","profil.png", 1);
             $this->userDao->createUser($user, $cle);
             header("Location: ".URL. "administrer-utilisateur");
@@ -217,6 +221,66 @@ class UserControleur {
         $urlVerification = Constante::$ADRESSE_APPLICATION."recuperationMdp/".$login."/".$cle;
         $sujet = "Récupération de votre mot de passe";
         $message = "Pour récupérer votre compte veuillez cliquer sur le lien suivant ".$urlVerification;
+    }
+    
+    function EnvoyerMailContact($email,$sujet,$contenu){
+         // Vérification des champs du formulaire
+        if (empty($email) || empty($sujet) || empty($contenu)) {
+            $_SESSION['alert'] = "Tous les champs doivent être remplis.";
+        } else {
+            Outils::sendMail($email, $sujet, $contenu);
+            $_SESSION['alert'] = "Votre message nous a été transmis, nous vous recontacterons au plus vite !";
+        }
+
+        header("Location: ".URL."contact");
+
+    }
+    
+    function EnvoiMailRecuperation($mail){
+        $uid = uniqid();
+        try {
+            $login = $this->userDao->getUserByMail($mail);
+        } catch(Exception $e){
+            $alert = $e->getMessage();
+            require "vue/login.view.php";
+            return;
+        }
+        $dateHeure = date("Y-m-d H:i:s");
+        $this->userDao->creerRecuperation($uid,$login,$dateHeure);
+        Outils::sendMail($mail, "Recuperation de votre mot de passe", "lien : " . Constante::$ADRESSE_APPLICATION . "/recuperer-passwd/". $uid);
+        $alert = "Un mail vous a été envoyé. Cliquez sur le lien qu'il contient pour rénitialiser votre mot de passe";
+        require "vue/login.view.php";
+    }
+    
+    public function recupererPassWd($cle){
+        $alert="";
+        $login = $this->userDao->getLoginByCle($cle);
+        require "vue/reinit.view.php";
+    }
+    
+        public function reinitialiserPassword($login, $passwd1, $passwd2) {
+        $alert="";
+        if(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/", $passwd1)) {
+            $alert = "Votre mot de passe doit contenir au moins 12 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.";
+            require "vue/reinit.view.php";
+            return;
+        }    
+        
+        if($passwd1 != $passwd2){
+            $alert="Les mots de passe ne sont pas similaires.";
+            require "vue/reinit.view.php";
+        }
+        else {
+            $passwdHash = password_hash($passwd1, PASSWORD_DEFAULT);
+            $this->userDao->reinitPasswod($login, $passwdHash);
+            $alert="réinitialisation mot de passe valide. Saisir votre nouveau mot de passe.";
+            require "vue/login.view.php";
+        }
+    }
+    
+    
+    function UserRefuseCookie() {        
+        require "vue/ConsentementCookie.view.php";
     }
     
     

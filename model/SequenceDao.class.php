@@ -108,18 +108,19 @@ class SequenceDao extends Connexion {
         return $sequence;
     }
     
-    function ModifierNomSequence($acronyme, $numero_sequence, $intitule, $description){
+    function ModifierNomSequence($intitule, $acronyme, $numero_sequence){
         $pdo = $this->getBdd();
         $req = "UPTADE sequence "
                 . "SET intitule = :intitule"
                 . "WHERE acronyme = :acronyme "
                 . "AND numero_sequence = :numero_sequence ";
         $stmt = $pdo->prepare($req);
-        $stmt->bindValue(":acronyme",$acronyme,PDO::PARAM_STR);
-        $stmt->bindValue(":numero_sequence",$numero_sequence,PDO::PARAM_INT);
         $stmt->bindValue(":intitule",$intitule,PDO::PARAM_STR);
+        $stmt->bindValue(":acronyme",$acronyme,PDO::PARAM_STR);
+        $stmt->bindValue(":numero_sequence",$numero_sequence,PDO::PARAM_INT);     
         $resultat = $stmt->execute();
         $stmt->closeCursor();
+        return $resultat;
     }
      
 }

@@ -56,58 +56,6 @@ INSERT INTO `formation` (`acronyme`, `titre`, `description`, `image`, `video`, `
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `question`
---
-
-DROP TABLE IF EXISTS `question`;
-CREATE TABLE IF NOT EXISTS `question` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `question` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
-
---
--- Déchargement des données de la table `question`
---
-
-INSERT INTO `question` (`id`, `question`) VALUES
-(1, 'Quel est le nom de votre mère ?'),
-(2, 'Quel est le nom de votre père ?'),
-(3, 'Quel est la marque de votre premier téléphone ?'),
-(9, 'Quel est votre couleur préférée ?');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `recuperation`
---
-
-DROP TABLE IF EXISTS `recuperation`;
-CREATE TABLE IF NOT EXISTS `recuperation` (
-  `cle` varchar(30) NOT NULL,
-  `login` varchar(255) NOT NULL,
-  `dateHeure` datetime NOT NULL,
-  PRIMARY KEY (`cle`),
-  KEY `recuperation_utilisateur_FK` (`login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `reponse`
---
-
-DROP TABLE IF EXISTS `reponse`;
-CREATE TABLE IF NOT EXISTS `reponse` (
-  `idQuestion` int NOT NULL,
-  `login` varchar(255) NOT NULL,
-  `reponse` varchar(255) NOT NULL,
-  PRIMARY KEY (`idQuestion`),
-  KEY `reponse_utilisateur_FK` (`login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
--- --------------------------------------------------------
 
 --
 -- Structure de la table `ressources`
@@ -139,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `ressources` (
   `type_document` varchar(10) NOT NULL,
   `document` text NOT NULL,
   PRIMARY KEY (`acronyme`,`numero_sequence`,numero_ressource),
-  CONSTRAINT  acronyme_sequence_sequence_FK FOREIGN KEY (`acronyme`,`numero_sequence`) REFERENCES (`acronyme`,`numero_sequence`)
+  CONSTRAINT  acronyme_sequence_sequence_FK FOREIGN KEY (`acronyme`,`numero_sequence`) REFERENCES sequence (`acronyme`,`numero_sequence`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 --
@@ -220,25 +168,13 @@ INSERT INTO `utilisateur_formation_inscrire` (`login`, `acronyme`, `date_inscrip
 ALTER TABLE `formation`
   ADD CONSTRAINT `utilisateur_FK` FOREIGN KEY (`login_createur`) REFERENCES `utilisateur` (`login`);
 
---
--- Contraintes pour la table `recuperation`
---
-ALTER TABLE `recuperation`
-  ADD CONSTRAINT `recuperation_utilisateur_FK` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
---
--- Contraintes pour la table `reponse`
---
-ALTER TABLE `reponse`
-  ADD CONSTRAINT `recuperation_question_FK` FOREIGN KEY (`idQuestion`) REFERENCES `question` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `reponse_utilisateur_FK` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `ressources`
 --
 ALTER TABLE `ressources`
-  ADD CONSTRAINT `,numero_sequence_ressource_FK` FOREIGN KEY (`numero_sequence`) REFERENCES `sequence` (`numero_sequence`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `acronyme_formation_ressource_FK` FOREIGN KEY (`acronyme`) REFERENCES `formation` (`acronyme`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `,numero_sequence_ressource_FK` FOREIGN KEY (acronyme,`numero_sequence`) REFERENCES `sequence` (acronyme,`numero_sequence`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `sequence`
@@ -254,6 +190,3 @@ ALTER TABLE `utilisateur_formation_inscrire`
   ADD CONSTRAINT `ufi_utilisateur_FK` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

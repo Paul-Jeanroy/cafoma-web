@@ -26,6 +26,7 @@ require_once "outil/Securite.class.php";
     <?php if(!Securite::verifAccessAdmin()){ ?>
         <div class="mb-3">
             <a href="<?= URL ?>supprimer-son-compte" class="btn btn-danger">Supprimer votre compte</a>
+            <a href="<?= URL ?>supprimer-cookies" class="btn btn-danger">Supprimer les cookies</a>
         </div>
     <?php } ?>
 </div>

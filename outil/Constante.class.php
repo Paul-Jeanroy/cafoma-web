@@ -1,8 +1,8 @@
 <?php
 
 class Constante {
-    //public static $ADRESSE_APPLICATION = "https://christophe-fessard.fr/";
     public static $ADRESSE_APPLICATION = "http://localhost/CAFOMA/";
+    //public static $ADRESSE_APPLICATION = "https://cafoma.online/";
     public static $DIR_FORMATION_IMAGE = "public/formation/image/";
     public static $DIR_FORMATION_VIDEO = "public/formation/video/";
     public static $DIR_GENERALE_IMAGE = "public/generale/image/";

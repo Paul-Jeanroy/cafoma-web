@@ -4,9 +4,9 @@ class Outils {
         //$headers = "From: xxxxx@gmail.com";
         //if(mail($destinataire,$sujet,$message,$headers)){
         if(mail($destinataire,$sujet,$message)){
-            echo("Mail envoyé");
+            //echo("Mail envoyé");
         } else {
-            echo("Mail non envoyé");
+            //echo("Mail non envoyé");
         }
     }
     public static function afficherTableau($tab,$titre){

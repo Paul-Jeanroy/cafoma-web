@@ -27,6 +27,14 @@ class FormationControleur {
         $this->userDao = UsersDao::getInstance();
     }    
     
+    // Récupération de 5 formations pour les afficher en page d'accueil
+    public function AffichageFormationAccueil(){
+        $alert = "";
+        $formations = $this->formationDao->findFiveFormation();
+        require "vue/accueil.view.php";
+    }
+    
+    
     // Récupération et affichage du catalogue entier
     public function afficherCatalogue(){
         $alert = "";

@@ -59,11 +59,14 @@ h2.titre_page {
 }
 
 #nav_menu {
-   height: 179px;
+   height: 125px;
     position: absolute;
     width: 100%;
+    background-color: #ebe6f1;
     top: 0px;
     z-index: -1;
+    border-bottom: 1px solid;
+    
 }
 
 .navbar_menu {
@@ -83,10 +86,8 @@ h2.titre_page {
 }
 
 img#img_logo_menu\ div_accueil {
-    left: 30px;
-    top: 1px;
     width: 19%;
-    position: absolute;
+    margin-left: 115px;
 }
 
 #div_menu {
@@ -97,7 +98,7 @@ img#img_logo_menu\ div_accueil {
 }
 
 .container{
-    margin-top: 205px;
+    margin-top: 140px;
 }
 
 .div_titre_admin {
@@ -129,7 +130,7 @@ img#img_logo_menu\ div_accueil {
     background: transparent;
     border: 2px solid rgba(255,255,255, .5);
     border-radius: 20px;
-    box-shadow: 0 0 30px black;
+    border: 1px solid;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,7 +149,7 @@ img#img_logo_menu\ div_accueil {
     background: transparent;
     border: 2px solid rgba(255,255,255, .5);
     border-radius: 20px;
-    box-shadow: 0 0 30px black;
+    border: 1px solid;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -214,6 +215,33 @@ img#img_logo_menu\ div_accueil {
     font-weight: 500;
 }
 
+.btn_login:hover{
+    color: #162938;
+    background-color: #fff;
+    border: 1px solid #162938;
+}
+
+.btn-creer-compte{
+    margin-top: 10px;
+    width: 100%;
+    height: 45px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
+}
+
+.btn-creer-compte:hover{
+    color: #162938;
+    background-color: #fff;
+    border: 1px solid #162938;
+}
+
+
 .btn_contact{
     width: 20%;
     height: 45px;
@@ -225,6 +253,89 @@ img#img_logo_menu\ div_accueil {
     font-size: 1em;
     color: #fff;
     font-weight: 500;
+}
+
+.btn_contact:hover{
+    color: #162938;
+    background-color: #fff;
+    border: 1px solid #162938;
+}
+
+.btn-detail{
+    width: 48%;
+    height: 37px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
+}
+
+.btn-detail:hover{
+    color: #162938;
+    background-color: #fff;
+    border: 1px solid #162938;
+}
+
+.btn-sinscire{
+    width: 50%;
+    height: 37px;
+    background: #ff7d7d;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
+}
+
+.btn-sinscire:hover{
+    color: #ff7d7d;
+    background-color: #fff;
+    border: 1px solid #ff7d7d;
+}
+
+.btn-suivre{
+    margin-top: 10px;
+    width: 39%;
+    height: 37px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 500;
+}
+
+.btn-suivre:hover{
+    color: #162938;
+    background-color: #fff;
+    border: 1px solid #162938;
+}
+
+
+.btn-desinscrire{
+    margin-top: 10px;
+    width: 58%;
+    height: 37px;
+    background: #ff7d7d;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 500;
+}
+
+.btn-desinscrire:hover{
+    color: #ff7d7d;
+    background-color: #fff;
+    border: 1px solid #ff7d7d;
 }
 
 .rember-forgot{
@@ -361,15 +472,6 @@ a.btn_certif {
     margin-bottom: 40px;
 }
 
-footer{
-    background-color:black;
-    color: white;
-    margin-top: 100px;
-    margin-bottom: 40px;
-    padding: 40px;
-    text-align: center;
-}
-
 .banniere{
    border: solid 2px white;
    background: rgba(0,0,0,0.911);
@@ -381,6 +483,7 @@ footer{
    display: flex;
    justify-content: space-around;
    padding: 30px;
+   z-index: 1;
    font-family: "Signika Negative", sans-serif;
 }
 .text-banniere p{
@@ -419,12 +522,6 @@ p {
     margin-bottom: 25px;
 }
 
-.btn-mescours {
-    position: absolute;
-    top: 341px;
-    right: 14px;
-}
-
 .text-right{
     text-align: right!important;
 }
@@ -443,17 +540,11 @@ a#a_creerFormation {
     background: transparent;
     border: 2px solid rgba(255,255,255, .5);
     border-radius: 20px;
-    box-shadow: 0 0 30px black;
+    border: 1px solid;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-left: 408px;
-}
-
-.btn-creer-compte {
-    position: absolute;
-    right: 27px;
-    top: 536px;
 }
 
 .alert.msg_alert.alert-danger {
@@ -505,20 +596,6 @@ img.logo_ia {
     transform: rotate(358deg);
 }
 
-a.btn.btn-retour {
-    border: 1px solid;
-    color: black;
-    border-radius: 9px;
-    background: white;
-    position: absolute;
-    top: 209px;
-    left: 130px;
-}
-
-a.btn.btn-retour:hover {
-    background: transparent;
-}
-
 h4.titre_page {
     text-align: center;
     border: 1px solid #ebe6f1;
@@ -561,4 +638,205 @@ a.btn-modif-seq.btn.btn-warning {
     background-color: #f8d7da;
     border-color: #f5c2c7;
 
+}
+
+footer {
+  background-color: #f8f8f8;
+  padding: 50px 0;
+  color: #666;
+  margin-top: 70px;
+}
+
+footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+footer ul li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+footer ul li a {
+  color: #666;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+footer ul li a:hover {
+  color: #222;
+}
+
+.credits {
+  background-color: #222;
+  color: #fff;
+  padding: 10px;
+}
+
+.credits p {
+  margin: 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.container {
+  position: relative;
+  overflow: hidden;
+}
+.cards {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+.card {
+    flex: 0 0 350px;
+    height: 480px;
+    margin-right: 20px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+    height: 140px;
+}
+
+.card-img {
+  width: 200px;
+  height: 200px;
+  margin-top: 30px;
+}
+
+.card-btn {
+  display: inline-block;
+  background-color: #162938;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: auto;
+}
+
+.card-btn:hover {
+  background-color: white;
+  color: #162938;
+  border: 1px solid #162938;
+}
+
+.prev-button, .next-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #ccc;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+.prev-button {
+  left: 0;
+}
+.next-button {
+  right: 0;
+}
+
+.button-container {
+  position: absolute;
+  right: 0;
+  padding: 10px;
+}
+
+.button-container a {
+  display: inline-block;
+  background-color: #ff7d7d;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+.button-container a:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.alert_contact {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #333;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.td_vide{
+    background: white !important;
+}
+
+.tr_vide{
+    border-style: none;
+}
+
+#a_creerCompte {
+  background-color: #4285F4;
+  border-radius: 5px;
+  color: #fff;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 3px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s ease-out;
+}
+
+#a_creerCompte:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.login-register p{
+    text-align: center;
+}
+
+.div_section1_accueil {
+    margin-top: 100px;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.div_aff_txt_accueil {
+    margin-right: 40px;
+    text-align-last: left;
+}
+
+.div_img_form img{
+    width: 15%;
+    display: flex;
+}
+
+.div_img_form {
+    display: flex;
+}
+
+.div_img_form img:not(:first-child){
+    margin-left: 30px;
 }

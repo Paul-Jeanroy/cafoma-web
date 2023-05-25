@@ -8,7 +8,7 @@ class UsersDao extends Connexion {
     private function __construct() {}
     
     public static function getInstance() {
-        if(is_null(self::$_instance)) {
+        if(is_null(self::$_instance)){
             self::$_instance = new UsersDao();  
         }
         return self::$_instance;
@@ -143,8 +143,58 @@ class UsersDao extends Connexion {
         return $u;
     }
     
+    public function creerRecuperation($cle,$login,$dateHeure){
+        $pdo = $this->getBdd();
+        $req = "
+        INSERT INTO recuperation (cle, login, dateHeure)
+        values (:cle, :login, :dateHeure)";
+        $stmt = $pdo->prepare($req);
+        $stmt->bindValue(":cle",$cle,PDO::PARAM_STR);
+        $stmt->bindValue(":login",$login,PDO::PARAM_STR);
+        $stmt->bindValue(":dateHeure",$dateHeure,PDO::PARAM_STR);
+        $resultat = $stmt->execute();
+        $stmt->closeCursor(); 
+    }
     
+    public function getUserByMail($mail){
+        $stmt = $this->getBdd()->prepare("SELECT login FROM utilisateur WHERE mail=:mail");
+        $stmt->bindValue(":mail",$mail,PDO::PARAM_STR);
+        $result = $stmt->execute();
+        $login = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($login == false){
+            throw new Exception("Aucun compte associé au mail : ".$mail);
+        }
+        $stmt->closeCursor();
+        return $login['login'];
+    }
     
+    public function isMailAllreadyExist($mail){
+        $pdo = $this->getBdd();
+        $req = "SELECT mail FROM utilisateur WHERE mail=:mail";
+        $stmt = $pdo->prepare($req);
+        $stmt->bindValue(":mail",$mail,PDO::PARAM_STR);
+        $stmt->execute();
+        $mail = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();  
+        return $mail['mail'];
+    }
+    
+    public function getLoginByCle($cle){
+        $stmt = $this->getBdd()->prepare("SELECT login FROM recuperation WHERE cle=:cle");
+        $stmt->bindValue(":cle",$cle,PDO::PARAM_STR);
+        $stmt->execute();
+        $loginbd = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $loginbd['login'];
+    }
+    
+        public function reinitPasswod($login, $passwdHash) {
+        var_dump($login,$passwdHash);
+        $stmt = $this->getBdd()->prepare("UPDATE utilisateur SET password=:passwdHash WHERE login=:login");
+        $stmt->bindValue(":passwdHash",$passwdHash,PDO::PARAM_STR);
+        $stmt->bindValue(":login",$login,PDO::PARAM_STR);
+        $result = $stmt->execute();
+    }
     
 
 }

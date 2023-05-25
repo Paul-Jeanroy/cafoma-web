@@ -1,10 +1,7 @@
 <?php ob_start() ?>
  
 <h4 class="titre_form">Titre : <?php echo $formation->getTitre(); ?></h4>
-
-<a class="btn btn-retour" href="<?= URL ?>afficher-catalogue">Retour</a>
-<br><br>
-
+    
 <div class="row">
     <div class="col-4">
         <video class="video_detail"contextmenu="return false;" oncontextmenu="return false;" controls controlsList="nodownload" autoplay muted width="400px" >
@@ -46,7 +43,7 @@ $sequenceList = $formation->getSequenceList();
                     <th class="intitule_sequence"><?= $sequence->getIntitule(); ?></th>
                 </thead>
             <tbody>
-                <tr><td><hr></td></tr>
+                <tr class="tr_vide"><td class="td_vide"></td></tr>
                 <?php } ?> <!-- Fin du Foreach 1 -->
                
                 <?php if($sequenceList == null) { ?>

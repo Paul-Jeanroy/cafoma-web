@@ -13,13 +13,14 @@ ob_start();
         <form method="POST" action="<?= URL ?>creer-compte-validation" enctype="multipart/form-data">
             <div class="input-box">
               <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
-              <label for="username" class="form-label">Nom d'utilisateur</label>
+              <label for="username" class="form-label" required pattern="^[A-Aa-z '-]+$" maxlenght="20" >Nom d'utilisateur</label>
               <input type="text" class="form-control" id="username" name="login">
             </div>
             <div class="input-box">
-                <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                <span class="icon"><ion-icon name="eye-outline" id="show-password"></ion-icon><ion-icon name="eye-off-outline" id="hide-password"></ion-icon><ion-icon name="lock-closed-outline"></ion-icon></span>
               <label for="passwd" class="form-label">Mot de passe</label>
               <input type="password" class="form-control" id="passwd" name="passwd">
+              
             </div>
             <!-- version 3-01 -->
             <div class="input-box">
@@ -30,7 +31,7 @@ ob_start();
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="mentions" id="flexCheckIndeterminate">
                 <label class="form-check-label" for="flexCheckIndeterminate">
-                  J'ai lu et j'accepte les conditions de service décrites dans les 
+                  J'ai lu et j'accepte les conditions de service décrites dans les
                   <a href="<?= URL ?>mention-legales">mentions légales</a>
                 </label>
             </div>
@@ -44,6 +45,20 @@ ob_start();
           </form>
     </div>
 </div>
+
+<script>
+    const passwordInput = document.getElementById('passwd');
+    const showPasswordButton = document.getElementById('show-password');
+    const hidePasswordButton = document.getElementById('hide-password');
+
+    showPasswordButton.addEventListener('click', () => {
+      passwordInput.type = 'text';
+    });
+
+    hidePasswordButton.addEventListener('click', () => {
+      passwordInput.type = 'password';
+    });
+</script>
 
 <?php
 $content = ob_get_clean();

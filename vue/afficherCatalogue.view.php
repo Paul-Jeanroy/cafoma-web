@@ -28,10 +28,10 @@
             <div class="row text-right">
                 <div class="col-9"></div>
                 <div class="col-3 text-end">
-                    <a href="<?= URL ?>afficher-formation/<?php echo $formation->getAcronyme(); ?>" class="btn btn-primary">Détail</a>
+                    <a href="<?= URL ?>afficher-formation/<?php echo $formation->getAcronyme(); ?>" class="btn btn-detail">Détail</a>
                     <?php if(Securite::isConnected()){ ?>
                     <?php if(!Securite::verifAccessPartenaire()){ ?>
-                        <a href="<?= URL ?>inscrire-formation/<?php echo $formation->getAcronyme(); ?>" class="btn btn-success">S'inscrire</a>
+                        <a href="<?= URL ?>inscrire-formation/<?php echo $formation->getAcronyme(); ?>" class="btn btn-sinscire">S'inscrire</a>
                     <?php } ?>
                     <?php } ?>
                 </div>

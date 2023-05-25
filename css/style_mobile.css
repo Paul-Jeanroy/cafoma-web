@@ -1,0 +1,19 @@
+
+@media screen and (max-width: 600px) {
+    #div_menu {
+        display: block;
+        position: absolute;
+        margin-top: 0px;
+        right: 0px;
+    }
+    #div_menu a{
+        width: 50%;
+        display: block;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    #img_logo_menu\div_accueil {
+        display: none;
+    }
+}

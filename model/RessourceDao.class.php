@@ -33,16 +33,12 @@ class RessourceDao extends Connexion {
     
     // Supprimer une ressource d'une formation
     function supprimerRessourceBDD($acronyme, $numero_sequence, $numero_ressource){
-        var_dump($acronyme, $numero_sequence, $numero_ressource);
         $pdo = $this->getBdd();
-        $req = "DELETE FROM ressources "
-                . "WHERE acronyme = :acronyme "
-                . "AND numero_sequence = :numero_sequence"
-                . "AND numero_ressource = :numero_ressource";
+        $req = "DELETE FROM ressources WHERE acronyme=:acronyme AND numero_ressource=:numero_ressource AND numero_sequence=:numero_sequence";
         $stmt = $pdo->prepare($req);
         $stmt->bindValue(":acronyme",$acronyme,PDO::PARAM_STR);
-        $stmt->bindValue(":numero_sequence",$numero_sequence,PDO::PARAM_STR);
-        $stmt->bindValue(":numero_ressource",$numero_ressource,PDO::PARAM_STR);
+        $stmt->bindValue(":numero_ressource",$numero_ressource,PDO::PARAM_INT);
+        $stmt->bindValue(":numero_sequence",$numero_sequence,PDO::PARAM_INT);
         $resultat = $stmt->execute();
         $stmt->closeCursor();
         if($resultat > 0){

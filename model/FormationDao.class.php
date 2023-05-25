@@ -19,6 +19,21 @@ class FormationDao extends Connexion {
         return self::$_instance;
     } 
     
+    // Récupération de 5 formations
+    function findFiveFormation(){
+        $stmt = $this->getBdd()->prepare("SELECT * FROM formation ORDER BY RAND() LIMIT 5");
+        $stmt->execute();
+        $bddFormations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        $formations = null;
+        foreach($bddFormations as $f){
+            $formation=new Formation($f['acronyme'], $f['titre'], $f['description'], $f['image'], $f['video'], $f['pour_qui'],
+                    $f['prerequis']);
+            $formations[]=$formation;
+        }
+        return $formations;
+    }
+    
     // Créer une formation
     function creerFormation($acronyme,$titre,$description,$image,$video,$loginCreateur,$pour_qui,$prerequis){
         $pdo = $this->getBdd();
@@ -140,6 +155,7 @@ class FormationDao extends Connexion {
         $stmt->closeCursor();  
         $formation=new Formation($formationBdd['acronyme'], $formationBdd['titre'], $formationBdd['description'], $formationBdd['image'], 
               $formationBdd['video'],$formationBdd['pour_qui'],$formationBdd['prerequis']);
+        $formation->setSequenceList($this->FindAllSequenceForFormation($acronyme));
         return $formation;
     }
     

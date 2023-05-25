@@ -60,7 +60,7 @@ class SequenceControleur {
         var_dump($acronyme, $numero_sequence, $intitule);
         if($intitule !== ""){
             $alert = "";
-            $this->sequenceDao->ModifierNomSequence($acronyme, $numero_sequence, $intitule);
+            $this->sequenceDao->ModifierNomSequence($intitule, $acronyme, $numero_sequence);
         }
         else {
             $alert = "Veuillez mettre un nom de séquence valide !";

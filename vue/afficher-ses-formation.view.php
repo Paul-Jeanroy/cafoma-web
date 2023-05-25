@@ -14,14 +14,14 @@
     <?php $i=0; ?>
     <?php foreach($formations as $formation) { ?>
       <div class="col-3">
-        <div class="card p-1 m-1" style="max-width: 19rem; height: 25rem;">
-          <img width="91" height="200" src="public/img/<?php echo $formation->getImage(); ?>" class="card-img-top" alt="image">
+        <div class="card p-1 m-1" style="max-width: 19rem; height: 30rem;">
+          <img width="91" height="200" style="margin-top: 10px;"src="public/img/<?php echo $formation->getImage(); ?>" class="card-img-top" alt="image">
           <div class="card-body">
             <h5 class="card-title"><?php echo $formation->getTitre(); ?></h5>
             <div class="btn-mescours">
-                <a href="<?= URL ?>afficher-formation-ressource/<?php echo $formation->getAcronyme();?>" class="btn btn-primary">Suivre</a>
+                <a href="<?= URL ?>afficher-formation-ressource/<?php echo $formation->getAcronyme();?>" class="btn btn-suivre">Suivre</a>
                 <?php if(Securite::isConnected()){ ?>
-                    <a href="<?= URL ?>desinscrire-formation/<?php echo $formation->getAcronyme();?>" class="btn btn-danger">désinscrire</a>
+                    <a href="<?= URL ?>desinscrire-formation/<?php echo $formation->getAcronyme();?>" class="btn btn-desinscrire">désinscrire</a>
                 <?php } ?>
             </div>
           </div>

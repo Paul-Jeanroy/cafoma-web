@@ -11,7 +11,7 @@
         <form method="POST" action="<?= URL ?>valider-login" enctype="multipart/form-data">
             <div class="input-box">
                 <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
-                <label for="username" class="form-label" required>Nom utilisateur</label>
+                <label for="username" class="form-label" required pattern="^[A-Aa-z '-]+$" maxlenght="20">Nom utilisateur</label>
                 <input type="text" class="form-control" id="username" name="login">
                 
             </div>
@@ -20,9 +20,9 @@
                 <label for="passwd" class="form-label" required>Mot de passe</label>
                 <input type="password" class="form-control" id="passwd" name="password">
             </div>
-            <div class="rember-forgot">
+<!--            <div class="rember-forgot">
                 <a href="<?= URL ?>recuperer-mdp">Mot de passe oublié ?</a>
-            </div> 
+            </div> -->
             <div class="login-register">
                 <p>Vous n'avez pas de compte ? <a href="<?= URL ?>creer-compte" class="register-link">S'inscrire</a></p>
             <button type="submit" class="btn btn_login">Se connecter</button>
@@ -30,10 +30,6 @@
     </div>
 </div>
 </div>
-    
-    
-    <img class="logo_code" src="public/img/logo_code.png">
-    <img class="logo_ia" src="public/img/logo_ia.png">
 <?php
 $content = ob_get_clean();
 $titre = "";

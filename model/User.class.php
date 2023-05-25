@@ -18,6 +18,13 @@ class User {
         $this->image = $image;
         $this->estValide = $estValide;
     }
+    
+    public function toArray() {
+    return [
+      'login' => $this->login,
+      'password' => $this->password,
+    ];
+  }
     public function __toString() {
         return $this->login." ".$this->password." ".$this->mail." ".$this->role." ". $this->estValide;
     }

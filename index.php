@@ -7,11 +7,11 @@ require_once "controleur/RessourceControleur.class.php";
 require_once "controleur/SequenceControleur.class.php";
 //echo "Test - session_start";
 
-//if (Securite::autoriserCookie()){
-//    session_start();  
-//}
+if (Securite::autoriserCookie()){
+    session_start();  
+}
 
-session_start();
+//session_start();
 
 $userControleur = new UserControleur();
 $formationControleur = new FormationControleur(); 
@@ -24,14 +24,13 @@ try{
     
     define("URL", str_replace("index.php","",(isset($_SERVER['HTTPS']) ? "https" : "http")."://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
     if(empty($_GET['action']) || !isset($_GET['action'])){
-       
-        require "vue/accueil.view.php";
+       $formationControleur->AffichageFormationAccueil();
     }
     else {
         $url = explode("/", filter_var($_GET['action']),FILTER_SANITIZE_URL);
         //Outils::afficherTableau($url, "url = ");
         switch ($url[0]){
-            case "accueil": require "vue/accueil.view.php";
+            case "accueil": $formationControleur->AffichageFormationAccueil();
             break;
         
             /* ------ UTILISATEUR ------ */
@@ -40,8 +39,12 @@ try{
             case "creer-compte-validation": $userControleur->creerCompteValidation(Securite::validerInputData($_POST['login']), 
                 Securite::validerInputData($_POST['mail']),Securite::validerInputData($_POST['passwd']),isset($_POST['mentions']),isset($_POST['perso']));
             break;
-            case "valider-compte-mail": $userControleur->recevoirMailCompteValidation($url[1],
-                    Securite::validerInputData($url[2]));
+            case "valider-compte-mail": $userControleur->recevoirMailCompteValidation($url[1],Securite::validerInputData($url[2]));
+            break;
+            case "recuperer-passwd" : $userControleur->recupererPassWd($url[1]);
+            break;
+            case "reinit-passwd": $login=$_POST['login'];$passwd1=$_POST['passwd1'];$passwd2=$_POST['passwd2'];
+                $userControleur->reinitialiserPassword($login, $passwd1, $passwd2);
             break;
             case "login": $userControleur->login();
             break;
@@ -55,7 +58,9 @@ try{
             break;
             case "supprimer-son-compte": $userControleur->supprimerSonCompte();
             break;
-            
+            case "envoyer-msg-contact": $userControleur->EnvoyerMailContact(Securite::validerInputData($_POST['mail']),Securite::validerInputData($_POST['sujet']),
+                    Securite::validerInputData($_POST['contenu']));
+            break;
            
         
             /* ------ FORMATION ------ */
@@ -131,7 +136,7 @@ try{
             break;
             case "recuperer-mdp": $userControleur->RecupererMdp();
             break;
-            case "recuperer-mdp-validation": $userControleur->RecupererMdpValidation(Securite::validerInputData($_POST['reponse1']));
+            case "recuperer-mail": $userControleur->EnvoiMailRecuperation($_POST['mail']);
             break;
             case "mention-legales": require "vue/mentionLegale.view.php";
             break;
@@ -139,15 +144,22 @@ try{
             break;
             case "donnees-personnelles": require "vue/donneesPersonnelles.view.php";
             break;
-            case "supprimer-cookie": echo "supprimer-cookie";
+            case "supprimer-cookies": echo "supprimer-cookie";
                 session_destroy();
                 //unset($_COOKIE['cookie-accept']);
                 setcookie('cookie-accept', '', time()-3600, '/', '', false, false);
                 header("Location: index.php");
             break;
+            case "cookie-accept" : // L'utilisateur a accepté l'utilisation de cookies
+                    setcookie('cookie-accept', 'true', time() + 365 * 24 * 60 * 60, '/');
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
+            break;
+            case "cookie-refuse": $userControleur->UserRefuseCookie();
+            break;
             case "application-android": require "vue/android.view.php";
             break;
-        
+            case "conditions-generales": require "vue/ConditionsGenerales.view.php";
+            break;
             default: throw new Exception("La page n'existe pas");
         }
     }
